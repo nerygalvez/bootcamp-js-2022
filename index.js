@@ -1,10 +1,17 @@
-const paragraph = document.getElementsByTagName("p");
-console.log("Párrafos en el documento ", paragraph.length);
+const paragraphs = document.getElementsByTagName("p");
 
-if(paragraph.length > 0){
 
-    const p1 = paragraph[0];
+if(paragraphs.length > 0){
 
+    const p1 = paragraphs[0];
     p1.innerText = "Bienvenidos al Bootcamp!";
+
+}
+
+if(paragraphs.length > 1){
+
+    const p1 = paragraphs[1];
+    const fecha = new Date();
+    p1.innerText = "Párrafos en el documento " + paragraphs.length + " (" + fecha + ")";
 
 }
