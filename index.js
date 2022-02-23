@@ -1,6 +1,10 @@
-let paragraph = document.getElementsByTagName("p");
-console.log(paragraph);
+const paragraph = document.getElementsByTagName("p");
+console.log("Párrafos en el documento ", paragraph.length);
 
-let p1 = paragraph[0];
+if(paragraph.length > 0){
 
-p1.innerText = "Bienvenidos al Bootcamp!";
+    const p1 = paragraph[0];
+
+    p1.innerText = "Bienvenidos al Bootcamp!";
+
+}
