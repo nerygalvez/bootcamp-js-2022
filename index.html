@@ -11,11 +11,75 @@
 </head>
 <body>
     
-    <h1>Bootcamp JavaScript</h1>
-    <p>Bienvenidos!</p>
-    <p>Bootcamp</p>
+    <!-- ?nombre=PANTALON&cantidad=10&precio=918181&categoria=4 -->
+    <!-- index.html es la ruta a donde se va a dirigir el formulario.
+            En el código de JavaScript vamos a cambiar que NO se manden los parámetros a esta ruta
+        -->
+    <form action="index.html">
 
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre">
+        </div>
+
+        <div>
+            <label for="cantidad">Cantidad</label>
+            <input type="number" name="cantidad" id="cantidad">
+        </div>
+
+        <div>
+            <label for="precio">Precio</label>
+            <input type="number" name="precio" id="precio">
+        </div>
+
+        <div>
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria">
+                <option value="1">Categoría 1</option>
+                <option value="2">Categoría 2</option>
+                <option value="3">Categoría 3</option>
+                <option value="4">Categoría 4</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit">Guardar</button>
+        </div>
+
+    </form>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            
+            <tbody>
+
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th colspan="2">Totales: </th>
+                    <td id="sumaCantidad">0</td>
+                    <td id="sumaPrecio">0</td>
+                    <td id="sumaTotal">0</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
     
     <script src="index.js"></script>
+
 </body>
 </html>
