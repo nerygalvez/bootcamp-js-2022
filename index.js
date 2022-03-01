@@ -17,7 +17,6 @@ const sumaTotalElement = document.getElementById("sumaTotal");
 //Obtengo los input del fomulario para poder hacer el edit
 /** @type {HTMLInputElement}*/
 const inputCodigo = document.getElementById("codigo");
-
 /** @type {HTMLInputElement}*/
 const inputNombre = document.getElementById("nombre");
 /** @type {HTMLInputElement}*/
@@ -55,6 +54,8 @@ function onsubmit(event) {
 
   let tr;
 
+  console.log("Código: ", codigo, " Typeof: ", typeof codigo);
+
   if (!codigo) {
     //Si codigo NO tiene valor tengo que crear una nueva fila
     indice++; //Puedo agregar esta línea para evitar que me ponga codigo = 0, o puedo declarar la variable arriba como "let indice = 1;"
@@ -65,10 +66,6 @@ function onsubmit(event) {
   } else {
     tr = currentRow;
   }
-
-  //Agrego la fila a la tabla
-  //indice++;
-  //const tr = document.createElement("tr");
 
   tr.dataset.categoria = categoria;
 
@@ -84,8 +81,6 @@ function onsubmit(event) {
     </td>
     `;
 
-  tbody.appendChild(tr); //Agrego al tbody la nueva fila
-
   //Actualizo los totales, tengo que parsear los valores a Float porque los está tomando como String
   sumaCantidad += parseFloat(cantidad);
   sumaPrecio += parseFloat(precio);
@@ -97,6 +92,10 @@ function onsubmit(event) {
   sumaTotalElement.innerText = sumaTotal;
 
   form.reset(); //Limpio el formulario
+
+  //form.reset(); NO limpia el input type="hidden" donde se almacena el código
+  //Y luego de editar no dejaba agregar nuevos productos, siempre editaba el último registro donde se presionó 'editar'
+  inputCodigo.value = "";
 
   document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
 }
