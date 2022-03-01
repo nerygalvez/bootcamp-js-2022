@@ -75,7 +75,14 @@ function onsubmit(event) {
     
     <td>${total}</td>
     <td>
-        <a href="#" onclick="onEdit(event)">Editar</a> | <a href="#" onclick="onDelete(event)">Eliminar</a>
+      <div class="btn-group">
+        <a title="Editar" href="#" onclick="onEdit(event)" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-pencil-square"></i>
+        </a> 
+        <a title="Eliminar" href="#" onclick="onDelete(event)" class="btn btn-sm btn-outline-danger">
+          <i class="bi bi-trash"></i>
+        </a>
+      </div>
     </td>
     `;
 
@@ -109,10 +116,13 @@ function onEdit(event) {
 
   //event.target me devuelve la referencia al elemento que disparó el evento (event)
   /** @type {HTMLAnchorElement} */
-  const anchor = event.target; //La referencia al elemento <a>
+  //const anchor = event.target; //La referencia al elemento <a>
+  const anchor = event.currentTarget; //Hago referencia al elemento al que yo le puse el evento, no el que presioné,
+  //esto en el caso cuando agregamos <i class="bi bi-pencil-square"></i> para el editar y eliminar
+  //porque si yo presionaba sobre la imagen de editar o el basurero event.target ya no me retornaba el elemento <a> sino el <i>
 
   //anchor.parentElement me devuelve la referencia al elemento padre
-  const tr = anchor.parentElement.parentElement;
+  const tr = anchor.parentElement.parentElement.parentElement;
 
   const celdas = tr.getElementsByTagName("td"); //Dentro de la fila quiero buscar los elementos de tipo 'td', me devuelve un arreglo
   const [tdCodigo, tdNombre, tdCantidad, tdPrecio] = celdas;
@@ -138,10 +148,13 @@ function onDelete(event) {
 
   //event.target me devuelve la referencia al elemento que disparó el evento (event)
   /** @type {HTMLAnchorElement} */
-  const anchor = event.target; //La referencia al elemento <a>
+  //const anchor = event.target; //La referencia al elemento <a>
+  const anchor = event.currentTarget; //Hago referencia al elemento al que yo le puse el evento, no el que presioné,
+  //esto en el caso cuando agregamos <i class="bi bi-pencil-square"></i> para el editar y eliminar
+  //porque si yo presionaba sobre la imagen de editar o el basurero event.target ya no me retornaba el elemento <a> sino el <i>
 
   //anchor.parentElement me devuelve la referencia al elemento padre
-  const tr = anchor.parentElement.parentElement;
+  const tr = anchor.parentElement.parentElement.parentElement;
 
   tbody.removeChild(tr); //Uso la variable tbody que declaré al inicio para eliminar un hijo
 }
