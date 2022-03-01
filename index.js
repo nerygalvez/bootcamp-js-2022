@@ -54,8 +54,6 @@ function onsubmit(event) {
 
   let tr;
 
-  console.log("Código: ", codigo, " Typeof: ", typeof codigo);
-
   if (!codigo) {
     //Si codigo NO tiene valor tengo que crear una nueva fila
     indice++; //Puedo agregar esta línea para evitar que me ponga codigo = 0, o puedo declarar la variable arriba como "let indice = 1;"
