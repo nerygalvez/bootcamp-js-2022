@@ -1,5 +1,4 @@
 const form = document.getElementsByTagName("form")[0]; //Tomo el primer formulario que encuentre
-form.addEventListener("submit", onsubmit); //Sobreescribo el método onsubmit
 
 const tbody = document.getElementsByTagName("tbody")[0]; //Tomo el primer tbody que encuentre
 
@@ -74,6 +73,17 @@ const reducer = (state, action) => {
       ...state,
       productos,
     };
+  } //Esto es para cuando quiero editar un producto se llenen los campos del formulario
+  else if (action.type == "producto-seleccionado") {
+    const codigo = action.payload.codigo; //Código del producto que quiero modificar
+
+    return {
+      ...state, //Retorno una copia del estado
+      //Ahora sí uso el otro atributo que definí en mi estado, había usado solo 'productos'
+      //Ahora voy a usar 'producto' en singular
+      //Si no encuentra un producto retorno un objeto vacío
+      producto: state.productos.find((x) => x.codigo == codigo) || {},
+    };
   }
 
   //Si no conozo el action que está llegando retorno el mismo estado
@@ -98,9 +108,19 @@ const unSubscribe = store.subscribe(() => {
   if (currentState != latestState) {
     latestState = currentState;
     console.log("Estado: ", store.getState());
+    renderForm(currentState.producto); //Si se quiere editar un producto se ponen sus atributos en el formulario
     renderTable(currentState.productos);
   }
 });
+
+const renderForm = (producto) => {
+  //Si producto.atributo != undefined pongo el valor que trae, sino pongo cadena vacía
+  inputCodigo.value = producto.codigo || "";
+  inputNombre.value = producto.nombre || "";
+  inputCantidad.value = producto.cantidad || "";
+  inputPrecio.value = producto.precio || "";
+  selectCategoria.value = producto.categoria || 1;
+};
 
 const renderTable = (productos) => {
   const filas = productos.map((item) => {
@@ -144,6 +164,17 @@ const renderTable = (productos) => {
         },
       });
     });
+
+    editar.addEventListener("click", (event) => {
+      event.preventDefault();
+      store.dispatch({
+        type: "producto-seleccionado",
+        payload: {
+          codigo: item.codigo,
+        },
+      });
+    });
+
     return tr;
   });
 
@@ -184,6 +215,79 @@ const renderTable = (productos) => {
     return elementos.map(selector).reduce((a, b) => a + b, 0);
   }
 };
+
+/**
+ * Para manejar el submit del formulario
+ */
+form.addEventListener("submit", onsubmit); //Sobreescribo el método onsubmit
+
+/**
+ *
+ * @param {Event} event
+ */
+function onsubmit(event) {
+  //Cancelamos la funcionalidad por defecto del form y ya podemos poner nuestra lógica
+  //Evitamos que el action="index.html" el cual por defecto manda los parámetros del formulario por la URL
+  event.preventDefault();
+
+  //Creo que aquí en new FormData(this) podría usar 'this' en lugar de indicar la variable
+  const data = new FormData(form); //Quiero consultar la data del formulario 'form' que declaré arriba
+
+  const values = Array.from(data.entries());
+
+  const [frmCodigo, frmNombre, frmCantidad, frmPrecio, frmCategoria] = values; //Descompongo el arreglo 'values'
+
+  const codigo = parseInt(frmCodigo[1]);
+  const nombre = frmNombre[1];
+  const cantidad = parseFloat(frmCantidad[1]);
+  const precio = parseFloat(frmPrecio[1]);
+  const categoria = parseInt(frmCategoria[1]);
+
+  if (codigo) {
+    //Si tiene un código definido es un actualizar
+    store.dispatch({
+      type: "producto-modificado",
+      payload: {
+        codigo,
+        nombre,
+        cantidad,
+        precio,
+        categoria,
+      },
+    });
+  } else {
+    //Si no tiene código quiere decir que quiero agregar un producto
+    store.dispatch({
+      type: "producto-agregado",
+      payload: {
+        nombre,
+        cantidad,
+        precio,
+        categoria,
+      },
+    });
+  }
+
+  /**
+   * Ya no quiero usar form.reset() porque todas las modificaciones a mi interfaz
+   * deberías de hacerlas a través de algún dispatch
+   */
+
+  //form.reset(); //Limpio el formulario
+
+  //form.reset(); NO limpia el input type="hidden" donde se almacena el código
+  //Y luego de editar no dejaba agregar nuevos productos, siempre editaba el último registro donde se presionó 'editar'
+  //inputCodigo.value = "";
+
+  store.dispatch({
+    type: "producto-seleccionado",
+    payload: {
+      codigo: null, //Le digo que no quiero seleccionar ninguno, un producto que no existe
+    },
+  });
+
+  document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
+}
 
 /**
  * Ejecuto un 'dispatch' esto va a ejecutar los 'reducers' que definí
