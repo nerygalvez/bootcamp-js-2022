@@ -97,6 +97,12 @@
     </main>
 
     <script src="https://unpkg.com/redux@4.1.2/dist/redux.min.js"></script>
-    <script src="index-v2.js"></script>
+
+    <!-- al iniciar la ruta con / el navegador empieza a buscar desde la carpeta raiz
+    Si yo pongo ../js/store.js empieza a buscar una carpeta atrás de donde está mi archivo actual que sería index.html
+  Si pongo solo js/store.js va a buscar una carpeta llamada "js" en la ruta donde está el archivo index.html -->
+    <script src="js/store.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
