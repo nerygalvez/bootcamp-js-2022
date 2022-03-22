@@ -62,16 +62,16 @@ form.addEventListener("submit", () => {
   });
 }); //Sobreescribo el método onsubmit
 
-const renderForm = (producto) => {
+function renderForm(producto) {
   //Si producto.atributo != undefined pongo el valor que trae, sino pongo cadena vacía
   inputCodigo.value = producto.codigo || "";
   inputNombre.value = producto.nombre || "";
   inputCantidad.value = producto.cantidad || "";
   inputPrecio.value = producto.precio || "";
   selectCategoria.value = producto.categoria || 1;
-};
+}
 
-const renderTable = (productos) => {
+function renderTable(productos) {
   const filas = productos.map((item) => {
     const tr = document.createElement("tr");
 
@@ -165,4 +165,4 @@ const renderTable = (productos) => {
 
     return elementos.map(selector).reduce((a, b) => a + b, 0);
   }
-};
+}

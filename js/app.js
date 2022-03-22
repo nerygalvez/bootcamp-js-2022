@@ -33,19 +33,13 @@ const unSubscribe = store.subscribe(() => {
   }
 });
 
-ui.onFormSubmit = (payload) => {
-  if (payload.codigo) {
+ui.onFormSubmit = (producto) => {
+  if (producto.codigo) {
     //Si tiene un código definido es un actualizar
-    store.dispatch({
-      type: "producto-modificado",
-      payload,
-    });
+    store.dispatch(productoModificado(producto));
   } else {
     //Si no tiene código quiere decir que quiero agregar un producto
-    store.dispatch({
-      type: "producto-agregado",
-      payload,
-    });
+    store.dispatch(productoAgregado(producto));
   }
 
   /**
@@ -53,32 +47,12 @@ ui.onFormSubmit = (payload) => {
    * deberías de hacerlas a través de algún dispatch
    */
 
-  //form.reset(); //Limpio el formulario
+  //Ya no uso todo el código para hacer el dispatch, solo mando a llamar mi Action Builder
 
-  //form.reset(); NO limpia el input type="hidden" donde se almacena el código
-  //Y luego de editar no dejaba agregar nuevos productos, siempre editaba el último registro donde se presionó 'editar'
-  //inputCodigo.value = "";
-
-  store.dispatch({
-    type: "producto-seleccionado",
-    payload: {
-      codigo: null, //Le digo que no quiero seleccionar ninguno, un producto que no existe
-    },
-  });
+  store.dispatch(productoSeleccionado(null)); //Le digo que no quiero seleccionar ninguno, un producto que no existe
 
   document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
 };
 
-ui.onEliminarClick = (codigo) => {
-  store.dispatch({
-    type: "producto-eliminado",
-    payload: { codigo },
-  });
-};
-
-ui.onEditarClick = (codigo) => {
-  store.dispatch({
-    type: "producto-seleccionado",
-    payload: { codigo },
-  });
-};
+ui.onEliminarClick = (codigo) => store.dispatch(productoEliminado(codigo));
+ui.onEditarClick = (codigo) => store.dispatch(productoSeleccionado(codigo));
