@@ -20,7 +20,9 @@ const reducer = (state, action) => {
       ...state,
       productos: [...state.productos, { ...producto, codigo, total }],
     };
-  } else if (action.type == "producto-modificado") {
+  }
+
+  if (action.type == "producto-modificado") {
     const producto = action.payload;
     const productos = state.productos.slice(); //Hago una copia del arreglo original usando 'slice'
     const codigo = producto.codigo; //Con el código del producto lo voy a buscar en el arreglo de productos
@@ -33,7 +35,9 @@ const reducer = (state, action) => {
       ...state,
       productos,
     };
-  } else if (action.type == "producto-eliminado") {
+  }
+
+  if (action.type == "producto-eliminado") {
     const codigo = action.payload.codigo;
     const productos = state.productos.filter((item) => item.codigo != codigo); //Obtengo todos los elementos menos el que tenga el código quiero eliminar
     return {
@@ -41,7 +45,8 @@ const reducer = (state, action) => {
       productos,
     };
   } //Esto es para cuando quiero editar un producto se llenen los campos del formulario
-  else if (action.type == "producto-seleccionado") {
+
+  if (action.type == "producto-seleccionado") {
     const codigo = action.payload.codigo; //Código del producto que quiero modificar
 
     return {
@@ -94,6 +99,11 @@ const productoAgregado = (payload) => ({
   payload,
 });
 
+const agregarOModificarProducto = (payload) => ({
+  type: "producto-agregado-o-modificado",
+  payload,
+});
+
 /**
  *
  * Agregando el Middleware
@@ -131,4 +141,34 @@ const loggerMiddleware = (store) => (next) => (action) => {
   const result = next(action); //Para que la aplicación funcione normalmente y se ejecute el reducer
   console.log("Next State: ", store.getState());
   return result; //Nuestro middleware debería retornar lo que retorna la función 'next'
+};
+
+/**
+ *
+ * Creo este middleware para poder manejar el código que actualmente tengo en app.js
+ * en la función ----> ui.onFormSubmit
+ *
+ * @param {*} store
+ * @returns
+ */
+const agregarOModificarProductoMiddleware = (store) => (next) => (action) => {
+  //Si no es el action que quiero digo que la aplicación siga con el flujo normal (llamo al next)
+  //El action va a ser ejecutado por el reducer
+  if (action.type != "producto-agregado-o-modificado") {
+    return next(action);
+  }
+
+  //Si es el action especial yo programo la lógica, no llamo al reducer con la función next
+  const producto = action.payload;
+
+  //Si tiene un código definido es un actualizar
+  //Si no tiene código quiere decir que quiero agregar un producto
+  const actionToDispatch = producto.codigo
+    ? productoModificado(producto)
+    : productoAgregado(producto);
+
+  document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
+
+  store.dispatch(actionToDispatch);
+  return store.dispatch(productoSeleccionado(null)); //Le digo que no quiero seleccionar ninguno, un producto que no existe
 };

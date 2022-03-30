@@ -11,7 +11,10 @@ const preLoadedState = {
 };
 
 //Agrego el middleware al Store
-const middleware = Redux.applyMiddleware(loggerMiddleware);
+const middleware = Redux.applyMiddleware(
+  loggerMiddleware,
+  agregarOModificarProductoMiddleware
+);
 const store = Redux.createStore(reducer, preLoadedState, middleware);
 
 /**
@@ -35,26 +38,7 @@ const unSubscribe = store.subscribe(() => {
   }
 });
 
-ui.onFormSubmit = (producto) => {
-  if (producto.codigo) {
-    //Si tiene un código definido es un actualizar
-    store.dispatch(productoModificado(producto));
-  } else {
-    //Si no tiene código quiere decir que quiero agregar un producto
-    store.dispatch(productoAgregado(producto));
-  }
-
-  /**
-   * Ya no quiero usar form.reset() porque todas las modificaciones a mi interfaz
-   * deberías de hacerlas a través de algún dispatch
-   */
-
-  //Ya no uso todo el código para hacer el dispatch, solo mando a llamar mi Action Builder
-
-  store.dispatch(productoSeleccionado(null)); //Le digo que no quiero seleccionar ninguno, un producto que no existe
-
-  document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
-};
-
+ui.onFormSubmit = (producto) =>
+  store.dispatch(agregarOModificarProducto(producto));
 ui.onEliminarClick = (codigo) => store.dispatch(productoEliminado(codigo));
 ui.onEditarClick = (codigo) => store.dispatch(productoSeleccionado(codigo));
