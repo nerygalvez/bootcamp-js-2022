@@ -10,7 +10,9 @@ const preLoadedState = {
   productos: [],
 };
 
-const store = Redux.createStore(reducer, preLoadedState);
+//Agrego el middleware al Store
+const middleware = Redux.applyMiddleware(loggerMiddleware);
+const store = Redux.createStore(reducer, preLoadedState, middleware);
 
 /**
  * Defino la función 'subscribe' de mi store

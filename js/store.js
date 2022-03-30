@@ -93,3 +93,42 @@ const productoAgregado = (payload) => ({
   type: "producto-agregado",
   payload,
 });
+
+/**
+ *
+ * Agregando el Middleware
+ *
+ * @param {*} store
+ * @returns
+ */
+// function loggerMiddleware(store) {
+//   /**
+//    * Cada vez que haga un dispatch se va a ejecutar la siguiente función
+//    *
+//    *
+//    * next es una función que usamos cuando queremos que se ejecute el action original
+//    *
+//    * Por ejemplo para 'productoAgregado' si yo aquí en el middleware verifiqué
+//    * que el nombre del producto viene null o vacío ya no quiero ejecutar el resto
+//    * del action y por lo tanto YA NO ejecuto la función next
+//    *
+//    */
+
+//   return function dispatchWrapper(next) {
+//     return function actionHandler(action) {
+//       const result = next(action); //Para que la aplicación funcione normalmente y se ejecute el reducer
+//       const state = store.getState();
+//       console.log("Dispatching: ", action);
+//       console.log("State: ", state);
+//       return result;
+//     };
+//   };
+// }
+
+//Lo más normal es declarar lo anterior como una función lambda
+const loggerMiddleware = (store) => (next) => (action) => {
+  console.log("Dispatching: ", action);
+  const result = next(action); //Para que la aplicación funcione normalmente y se ejecute el reducer
+  console.log("Next State: ", store.getState());
+  return result; //Nuestro middleware debería retornar lo que retorna la función 'next'
+};
