@@ -1,5 +1,5 @@
 //Creo un objeto para reemplazar en este archivo JavaScript todo lo que hacía con Redux en el archivo 'index-v2.js'
-const ui = {
+export const ui = {
   onFormSubmit: (data) => {},
   onEliminarClick: (codigo) => {},
   onEditarClick: (codigo) => {},

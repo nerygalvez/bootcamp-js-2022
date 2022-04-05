@@ -17,7 +17,7 @@ const actionTypes = {
  * @param {*} action
  * @returns
  */
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.ProductoAgregado:
       return productoAgregadoReducer(state, action);
@@ -53,29 +53,29 @@ const reducer = (state, action) => {
  * Y la otra opción es util  izar paréntesis en lugar de llaves
  * como lo hago en la función definida a continuación
  */
-const productoSeleccionado = (codigo) => ({
+export const productoSeleccionado = (codigo) => ({
   type: actionTypes.ProductoSeleccionado,
   payload: {
     codigo,
   },
 });
 
-const productoEliminado = (codigo) => ({
+export const productoEliminado = (codigo) => ({
   type: actionTypes.ProductoEliminado,
   payload: { codigo },
 });
 
-const productoModificado = (payload) => ({
+export const productoModificado = (payload) => ({
   type: actionTypes.ProductoModificado,
   payload,
 });
 
-const productoAgregado = (payload) => ({
+export const productoAgregado = (payload) => ({
   type: actionTypes.ProductoAgregado,
   payload,
 });
 
-const agregarOModificarProducto = (payload) => ({
+export const agregarOModificarProducto = (payload) => ({
   type: actionTypes.ProductoAgregadoOModificado,
   payload,
 });
@@ -112,7 +112,7 @@ const agregarOModificarProducto = (payload) => ({
 // }
 
 //Lo más normal es declarar lo anterior como una función lambda
-const loggerMiddleware = (store) => (next) => (action) => {
+export const loggerMiddleware = (store) => (next) => (action) => {
   console.log("Dispatching: ", action);
   const result = next(action); //Para que la aplicación funcione normalmente y se ejecute el reducer
   console.log("Next State: ", store.getState());
@@ -127,27 +127,28 @@ const loggerMiddleware = (store) => (next) => (action) => {
  * @param {*} store
  * @returns
  */
-const agregarOModificarProductoMiddleware = (store) => (next) => (action) => {
-  //Si no es el action que quiero digo que la aplicación siga con el flujo normal (llamo al next)
-  //El action va a ser ejecutado por el reducer
-  if (action.type != actionTypes.ProductoAgregadoOModificado) {
-    return next(action);
-  }
+export const agregarOModificarProductoMiddleware =
+  (store) => (next) => (action) => {
+    //Si no es el action que quiero digo que la aplicación siga con el flujo normal (llamo al next)
+    //El action va a ser ejecutado por el reducer
+    if (action.type != actionTypes.ProductoAgregadoOModificado) {
+      return next(action);
+    }
 
-  //Si es el action especial yo programo la lógica, no llamo al reducer con la función next
-  const producto = action.payload;
+    //Si es el action especial yo programo la lógica, no llamo al reducer con la función next
+    const producto = action.payload;
 
-  //Si tiene un código definido es un actualizar
-  //Si no tiene código quiere decir que quiero agregar un producto
-  const actionToDispatch = producto.codigo
-    ? productoModificado(producto)
-    : productoAgregado(producto);
+    //Si tiene un código definido es un actualizar
+    //Si no tiene código quiere decir que quiero agregar un producto
+    const actionToDispatch = producto.codigo
+      ? productoModificado(producto)
+      : productoAgregado(producto);
 
-  document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
+    document.getElementById("nombre").focus(); //Pongo el focus en el campo 'nombre' del formulario
 
-  store.dispatch(actionToDispatch);
-  return store.dispatch(productoSeleccionado(null)); //Le digo que no quiero seleccionar ninguno, un producto que no existe
-};
+    store.dispatch(actionToDispatch);
+    return store.dispatch(productoSeleccionado(null)); //Le digo que no quiero seleccionar ninguno, un producto que no existe
+  };
 
 function productoSeleccionadoReducer(state, action) {
   const codigo = action.payload.codigo; //Código del producto que quiero modificar
@@ -207,7 +208,7 @@ function productoAgregadoReducer(state, action) {
  * @param {*} lastId
  * @returns
  */
-function generadorCodigoProductoBuilder(codigoInicial) {
+export function generadorCodigoProductoBuilder(codigoInicial) {
   let codigo = codigoInicial;
 
   return (store) => (next) => (action) => {
