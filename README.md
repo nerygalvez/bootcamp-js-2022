@@ -28,7 +28,7 @@ npm init -y
     - Webpack: es toda la utelería que permite empaquetar la solución
     - Webpack-cli es la línea de comandos para interactuar con Webpack
 
-    --save-dev me permite indicar que estas dependencias son solo necesarias para
+    '--save-dev' o '-D' me permite indicar que estas dependencias son solo necesarias para
     desarrollo 'devDependencies', NO las vamos a usar en producción 'dependencies'
 -->
 
@@ -37,6 +37,29 @@ npm init -y
 ### Ejecutar scripts definidos en el package.json
 
 - npm run NombreScript
+
+### Instalación de React
+
+- npm install --save react react-dom
+
+### Instalación de Babel
+
+> Babel es una librería o una herramienta que nos va a permitir manejar React y Webpack. Tabmién traslada javaScript nuevo hacia javascript más estandar o que la mayoría de los exploradores soportan.
+
+> @babel/core Lógica inicial de Babel
+> @babel/preset-env Reconoce la nueva sintaxis de JavaScript
+> @babel/preset-react Reconoce la sintaxis de React
+> babel-loader Ayuda a conectar Webpack con Babel
+
+- npm install --save-dev @babel/core @babel/preset-env @babel/preset-react babel-loader
+
+> Lo siguiente es para que el html se genere en la carpeta dist y así todo esté empaquetado junto
+
+- npm install -D html-webpack-plugin
+
+> Para estar limpiando el contenido generado por Webpack en la carpeta 'dist'
+
+- npm install -D clean-webpack-plugin
 
 ## Ayuda para usar .gitignore
 
