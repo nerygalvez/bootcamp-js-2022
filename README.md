@@ -41,3 +41,7 @@ npm init -y
 ## Ayuda para usar .gitignore
 
 [Ayuda gitignore](https://www.toptal.com/developers/gitignore)
+
+## Sandbox video Introducción a React – Parte 2
+
+- [SandBox](https://codesandbox.io/s/introduccion-a-react-parte-2-yh1vrr)
