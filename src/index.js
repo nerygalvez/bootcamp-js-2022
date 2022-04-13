@@ -3,12 +3,17 @@
 //Comienzo a integrar React
 import React from "react";
 import ReactDom from "react-dom";
+import "./index.css";
+
+//Otra forma de jalar una imagen de src
+import foto from "./Foto 2.jpg";
 
 const container = document.getElementById("root");
 
 const App = () => (
-  <div>
-    <h1>Hola Reat!</h1>
+  <div className="app">
+    <h1>Hola React!</h1>
+    <img src={foto} />
   </div>
 );
 

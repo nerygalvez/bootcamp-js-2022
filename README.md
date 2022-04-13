@@ -61,6 +61,14 @@ npm init -y
 
 - npm install -D clean-webpack-plugin
 
+> Para que Webpack pueda reconocer el css
+
+- npm install -D style-loader css-loader
+
+> Para que el css importado (bootstrap) no lo genere dentro de 'dist/main.js' sino que genere un archivo aparte
+
+- npm install -D mini-css-extract-plugin
+
 ## Ayuda para usar .gitignore
 
 [Ayuda gitignore](https://www.toptal.com/developers/gitignore)
