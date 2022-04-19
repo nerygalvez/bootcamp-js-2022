@@ -69,6 +69,16 @@ npm init -y
 
 - npm install -D mini-css-extract-plugin
 
+> Para manejar el SERVIDOR DE DESARROLLO. Algo que permita ir probando la aplicación, hacer cambios y que los cambios de una vez se vayan reflejando en la aplicación
+
+- npm install -D webpack-dev-server
+
+> Para que Webpack al hacer un cambio NO refresque toda la página, sino solo el contenido que queremos
+
+- [Repositorio Oficial](https://github.com/pmmmwh/react-refresh-webpack-plugin)
+
+- npm install -D @pmmmwh/react-refresh-webpack-plugin react-refresh
+
 ## Ayuda para usar .gitignore
 
 [Ayuda gitignore](https://www.toptal.com/developers/gitignore)
