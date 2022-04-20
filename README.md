@@ -86,3 +86,8 @@ npm init -y
 ## Sandbox video Introducción a React – Parte 2
 
 - [SandBox](https://codesandbox.io/s/introduccion-a-react-parte-2-yh1vrr)
+
+## Create React App - Me da una plantilla para iniciar mi proyecto de React
+
+- [Página Oficial](https://create-react-app.dev/)
+- npx create-react-app NombreAplicación
