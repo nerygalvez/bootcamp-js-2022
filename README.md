@@ -91,5 +91,7 @@ npm init -y
 
 - [Página Oficial](https://create-react-app.dev/)
 - npx create-react-app NombreAplicación
-  > Cuando quiero que aparezca el archivo de Webpack.config.js
+
+> Cuando quiero que aparezca el archivo de Webpack.config.js
+
 - npm run eject
