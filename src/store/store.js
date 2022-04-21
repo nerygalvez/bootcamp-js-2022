@@ -121,6 +121,36 @@ export const loggerMiddleware = (store) => (next) => (action) => {
 
 /**
  *
+ * Middleware para almacenar la información en el almacenamiento
+ * local del navegador para que al refrescar la página (F5) no se borren
+ * los productos ya creados
+ * @param {*} store
+ * @returns
+ */
+export const storageMiddleware = (store) => (next) => (action) => {
+  const actions = [
+    actionTypes.ProductoAgregado,
+    actionTypes.ProductoModificado,
+    actionTypes.ProductoEliminado,
+  ];
+
+  const result = next(action); //Hago el cambio de estado independientemente del action.type
+
+  if (actions.indexOf(action.type) >= 0) {
+    //Si el action actual sí está dentro del arreglo ya hago lo que quiero
+    //Puedo hacer que el estado persista
+    const state = store.getState();
+    //Al usar sessionStorage si cierro el navegador y abro nuevamente se borra la información
+    //sessionStorage.setItem("state", JSON.stringify(state));
+    //Al usar localStorage si cierro el navegador y abro nuevamente la información persiste
+    localStorage.setItem("state", JSON.stringify(state));
+  }
+
+  return result; //Continúo con el flujo normal de Redux
+};
+
+/**
+ *
  * Creo este middleware para poder manejar el código que actualmente tengo en app.js
  * en la función ----> ui.onFormSubmit
  *
