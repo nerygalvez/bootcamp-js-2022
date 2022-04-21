@@ -6,7 +6,23 @@ Código de ejemplo creado durante el bootcamp de JavaScript, React y NodeJs.
 
 [Repositorio](https://github.com/laserants/bootcamp-js-2021)
 
-## Inicializar npm
+## ¿Cómo preparo mi proyecto del lado del CLIENTE?
+
+- cd cliente
+
+> Instalo las dependencias
+
+- npm install
+
+> Crear la carpeta dist para todo lo configurado con Webpack
+
+- npm run build
+
+> Levantar el cliente
+
+- npm run start
+
+## Inicializar npm y crear un package.json
 
 ### -y me dice que quiero toda la configuración por defecto
 
@@ -103,3 +119,9 @@ npm init -y
 ## Librería para conectar React y Redux
 
 - npm install --save react-redux
+
+## Eliminar archivos no necesarios usando el gitignore
+
+- git clean -fdx
+
+## Extensión "Live Server" de Visual Studio Code para el lado del servidor
