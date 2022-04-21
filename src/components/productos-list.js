@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { productoEliminado, productoSeleccionado } from "../store/store";
 
 /**
  * Me devuelve el componente para mostrar un Producto en HTML
@@ -41,31 +43,16 @@ const ProductoItem = (prop) => {
 };
 
 const ProductosList = () => {
-  const productos = [
-    {
-      codigo: 1,
-      nombre: "Producto de ejemplo REACT",
-      cantidad: 10,
-      precio: 100,
-      total: 100,
-    },
-    {
-      codigo: 2,
-      nombre: "222 Producto de ejemplo REACT",
-      cantidad: 10,
-      precio: 100,
-      total: 100,
-    },
-  ];
+  //Uso otro hook de react-redux para obtener los productos
+  //const s = useSelector((state) => state); //Obtengo todo el estado
+  //const s = useSelector((state) => state.productos); //Solo obtengo lo que me interesa que son productos
+  //console.log("s: ", s);
+  const productos = useSelector((state) => state.productos);
 
-  const seleccionar = (codigo) => {
-    console.log("Seleccionar: ", codigo);
-  };
+  const dispatch = useDispatch();
 
-  const eliminar = (codigo) => {
-    console.log("Eliminar: ", codigo);
-  };
-
+  const seleccionar = (codigo) => dispatch(productoSeleccionado(codigo));
+  const eliminar = (codigo) => dispatch(productoEliminado(codigo));
   const acciones = {
     seleccionar,
     eliminar,

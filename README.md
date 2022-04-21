@@ -2,6 +2,10 @@
 
 Código de ejemplo creado durante el bootcamp de JavaScript, React y NodeJs.
 
+## Repositorio Ejercicio Desarrollado en el Bootcamp
+
+[Repositorio](https://github.com/laserants/bootcamp-js-2021)
+
 ## Inicializar npm
 
 ### -y me dice que quiero toda la configuración por defecto
@@ -95,3 +99,7 @@ npm init -y
 > Cuando quiero que aparezca el archivo de Webpack.config.js
 
 - npm run eject
+
+## Librería para conectar React y Redux
+
+- npm install --save react-redux
